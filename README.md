@@ -6,3 +6,5 @@
 
 ## ~/.bashrc 수정
   - 마지막 줄에 export GOOLE_APPLICATION_CREDENTIALS="/home/pi/text_to_speech.json"
+
+테스트
