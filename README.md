@@ -8,4 +8,5 @@
     * google assistant api는 영어음성만 인식하고 출력한다.
     * 그렇기 때문에 google cloud speech to text api, google text to speech api 사용하여 한글음성을 인식하고 출력한다.
 
-
+## test_cloudspeech.py -> Speech to text api 사용하여 한글음성 인식 테스트
+  - 
