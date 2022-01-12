@@ -14,7 +14,7 @@ import Text
 def call(client, hints):
     trigger = '유비스'
     trigger_text = client.recognize(language_code='ko_KR', hint_phrases=hints)
-    if trigger == trigger_text:
+    if trigger in trigger_text:
         aiy.voice.tts.say('yes')
         print(trigger_text)
         return True
@@ -53,30 +53,34 @@ def main():
 
     with Board() as board:
         while True:
-            stat = call(client, hints)
-            if stat:
-                if hints:
-                    logging.info('Say something, e.g. %s.' % ','.join(hints))
-                else:
-                    logging.info('Say someting.')
+            try:
+                stat = call(client, hints)
+                if stat:
+                    if hints:
+                        logging.info('Say something, e.g. %s.' % ','.join(hints))
+                    else:
+                        logging.info('Say someting.')
 
-                text = client.recognize(language_code='ko_KR', hint_phrases=hints)
-                #text = text.lower()
-                print(text)
+                    text = client.recognize(language_code='ko_KR', hint_phrases=hints)
+                    #text = text.lower()
+                    print(text)
 
-                if text is None:
-                    logging.info('You said nothing.')
-                    continue
-                elif text is not None:
-                    speech = database.myDB(text)
-                    print(speech)
-                    Text.tts(speech)
+                    if text is None:
+                        logging.info('You said nothing.')
+                        continue
+                    elif text is not None:
+                        speech = database.myDB(text)
+                        print(speech)
+                        Text.tts(speech)
+
+                    logging.info('Your said: "%s"' % text)
+                    #text = text.lower()
+                    if '안녕' in text:
+                        aiy.voice.tts.say('goodbye')
+                        break
+            except Exception as e:
+                continue
             
-                logging.info('Your said: "%s"' % text)
-                #text = text.lower()
-                if '안녕' in text:
-                    aiy.voice.tts.say('goodbye')
-                    break
 
 
 if __name__ == '__main__':
